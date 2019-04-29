@@ -19,6 +19,15 @@ function sj() {
   tail -f .specjour.ignore
 }
 
+# Hitch
+hitch() {
+  command hitch "$@"
+  if [[ -s "$HOME/.hitch_export_authors" ]] ; then source "$HOME/.hitch_export_authors" ; fi
+}
+alias unhitch='hitch -u'
+# Uncomment to persist pair info between terminal instances
+# hitch
+
 # Git
 function parse_git_branch_with_parens() {
   git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
@@ -107,38 +116,33 @@ alias cd_ruby_src="cd $GEM_HOME/../../../"
 alias gem_console='irb -I lib -r lib/*.rb'
 alias gem_uninstall_all='gem list --no-versions | grep -iE "^\w.*" | xargs gem uninstall -aIx'
 
+# Stardew SMAPI mods
+alias smapi='cd ~/Library/Application\ Support/Steam/steamapps/common/Stardew\ Valley/Contents/MacOS/Mods/'
+
 # Tunnel
 # $ mkfifo reverse
 # $ nc -lp 8080 < reverse | nc localhost 80 > reverse
 
 source `brew --prefix`/etc/bash_completion.d/git-completion.bash
 
-export PATH="$PATH:/usr/local/lib/ruby/gems/2.3.0/bin" # Ruby 2.3 gems live here
-# Add the following to your ~/.bashrc or ~/.zshrc
-#
-# Alternatively, copy/symlink this file and source in your shell.  See `hitch --setup-path`.
+##
+# PATH settings
+##
 
-hitch() {
-  command hitch "$@"
-  if [[ -s "$HOME/.hitch_export_authors" ]] ; then source "$HOME/.hitch_export_authors" ; fi
-}
-alias unhitch='hitch -u'
+# Python 2.7
+# The orginal version is saved in .bash_profile.pysave
+PATH="/Library/Frameworks/Python.framework/Versions/2.7/bin:${PATH}"
 
-# Uncomment to persist pair info between terminal instances
-# hitch
+# Default Ruby, I think. This should probably use RVM instead.
+PATH="/usr/local/opt/ruby@2.3/bin:$PATH"
+PATH="$PATH:/usr/local/lib/ruby/gems/2.3.0/bin" # Ruby 2.3 gems live here
+
 ### Added by the Heroku Toolbelt
-export PATH="/usr/local/heroku/bin:$PATH"
+PATH="/usr/local/heroku/bin:$PATH"
 
 # Pyenv path
 PATH="/Users/katy/.pyenv/versions/3.5.0/bin:$PATH"
-
-# Stardew SMAPI mods
-alias smapi='cd ~/Library/Application\ Support/Steam/steamapps/common/Stardew\ Valley/Contents/MacOS/Mods/'
-
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="/Users/katy/.rvm/bin:/usr/local/bin:$PATH"
-
 eval "$(pyenv init -)"
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin:/Users/katy/.rvm/gems/ruby-2.4.1/bin"
+export PATH="/Users/katy/.rvm/bin:$PATH"
