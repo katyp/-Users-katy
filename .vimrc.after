@@ -1,0 +1,66 @@
+map <C-n> :NERDTreeToggle<CR>
+map <silent> ,p :silent :w !viminterpreter <CR>
+set guifont=Monaco:h13
+
+"
+" Tabularize customization taken from cehoffman/dotfiles
+"
+if !exists(':Tabularize')
+  finish
+endif
+
+" Align ruby symbol hashes on the hash marker
+AddTabularPattern! rbshash /\s\?\w\+:[^:]/l0l0
+AddTabularPattern! rbhash /^[^=]*\zs=>
+
+" Mappings for ruby hash rocket and symbol hashes
+nnoremap <silent> <Leader><tab> :Tabularize rbhash<CR>
+vnoremap <silent> <Leader><tab> :Tabularize rbhash<CR>
+nnoremap <silent> <Leader>q  :Tabularize rbshash<CR>
+vnoremap <silent> <Leader>q  :Tabularize rbshash<CR>
+
+" Convert do/end to {}
+" To-do: make these work with newlines
+nnoremap <silent> <Leader>d  :s/ do \(.*\) end\s*/ { \1 }/g<CR>
+vnoremap <silent> <Leader>d  :s/ do \(.*\) end\s*/ { \1 }/g<CR>
+nnoremap <silent> <Leader>[  :s/ { \(.*\) }\s*/ do \1 end/g<CR>
+vnoremap <silent> <Leader>[  :s/ { \(.*\) }\s*/ do \1 end/g<CR>
+
+" Mappings for interpreters
+" nmap <Leader>S :!scheme %
+
+
+" Remap quotation marks
+" inoremap <silent> ' "
+" inoremap <silent> " '
+"
+" Highlight 81+ columns
+let &colorcolumn=81
+highlight ColorColumn ctermbg=230
+
+augroup macvim
+  autocmd GuiEnter * highlight ColorColumn guibg=#FFFAFC
+  autocmd GuiEnter * let &colorcolumn=81
+augroup END
+
+let NERDSpaceDelims=1
+
+"
+" Ctrl-p configz
+"
+" Don't clear ctrl-p cache after exit
+" let g:ctrlp_clear_cache_on_exit = 0
+
+" Plug in the Silver Searcher
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
+
+" Formatter for ruby
+let g:rufo_auto_formatting = 0
+

@@ -3,4 +3,9 @@
 !.gitignore
 !.bashrc
 !.bash_profile
+!.gemrc
+!.vim*
+
+.vim/
+.viminfo
 

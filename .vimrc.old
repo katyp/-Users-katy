@@ -1,0 +1,169 @@
+call pathogen#infect()
+" call yankstack#setup()
+
+" Example augroup
+" augroup vimrc
+"   autocmd!
+"   autocmd GuiEnter * set columns=120 lines=70 number
+" augroup END
+
+syntax on
+filetype plugin indent on
+
+set number
+set visualbell
+set guifont=Monaco:h16
+" set guifont=Source\ Code\ Pro:h16
+set guioptions-=T guioptions-=L guioptions-=r guioptions+=c
+set shell=bash
+set smartcase
+set splitbelow
+set vb
+set wildmode=list:longest,full
+set wildignore+=tmp/locale_assets/**,*/.git/*
+set wildmenu
+set autoindent
+set tabstop=2
+set softtabstop=2
+set expandtab
+set shiftwidth=2
+set hlsearch
+set hidden
+set showcmd
+set incsearch
+set autoread
+set noswapfile
+set complete-=i
+set backspace=indent,eol,start
+if &listchars ==# 'eol:$'
+  set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
+endif
+set list
+function! HTry(function, ...)
+  if exists('*'.a:function)
+    return call(a:function, a:000)
+  else
+    return ''
+  endif
+endfunction
+if &statusline == ''
+  set statusline=[%n]\ %<%.99f\ %h%w%m%r%{HTry('CapsLockStatusline')}%y%{HTry('rails#statusline')}%{HTry('fugitive#statusline')}%#ErrorMsg#%{HTry('SyntasticStatuslineFlag')}%*%=%-14.(%l,%c%V%)\ %P
+endif
+set laststatus=2
+set smarttab
+
+runtime! plugin/matchit.vim
+runtime! macros/matchit.vim
+
+set background=dark
+
+map <Leader>cd :lcd %:h<CR>
+map <Leader>u :lcd %:p:h<CR>
+"map <Leader>b :CtrlPBuffer<CR>
+" nmap <Leader>qw :NERDTreeToggle<CR>
+
+" Disable help
+map <F1> <Esc>
+imap <F1> <Esc>
+
+" Use <F2> to toggle hlsearch
+nnoremap <silent> <F2> :let &hlsearch = !&hlsearch<CR>
+inoremap <silent> <F2> <C-o>:let &hlsearch = !&hlsearch<CR>
+
+" Use # to search forward
+nnoremap # *
+
+" Enable TAB indent and SHIFT-TAB unindent
+vnoremap <silent> <TAB> >gv
+vnoremap <silent> <S-TAB> <gv
+
+inoremap          <C-A> <C-O>^
+inoremap     <C-X><C-@> <C-A>
+cnoremap          <C-A> <Home>
+cnoremap     <C-X><C-A> <C-A>
+inoremap          <C-E> <End>
+cnoremap          <C-F> <Right>
+
+" let g:buffergator_autoexpand_on_split = 0
+" let g:buffergator_sort_regime = "mru"
+" let g:buffergator_display_regime = "bufname"
+" let g:buffergator_viewport_split_policy = "T"
+" let g:buffergator_split_size = 10
+
+" let g:ctrlp_map = ''
+" nnoremap <leader>f :CtrlP<CR>
+" nnoremap <leader>b :CtrlPBuffer<CR>
+" nnoremap <leader>m :CtrlPMRUFiles<CR>
+" nnoremap <leader>t :CtrlPTag<CR>
+" let g:ctrlp_custom_ignore = 'tmp\/\|public\/assets\/'
+" let g:ctrlp_user_command = 'find %s -type f'
+" let g:ctrlp_working_path_mode = 0
+
+" nmap <C-p> <Plug>yankstack_substitute_newer_paste
+" nmap <C-P> <Plug>yankstack_substitute_older_paste
+
+" Unite
+let g:unite_source_history_yank_enable = 1
+
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
+call unite#custom#source('file_rec', 'ignore_pattern', 'tmp/\|log/\|app/assets/images\|public/\|tsung/')
+" call unite#custom#source('file_rec', 'ignore_pattern', 'app\/')
+
+nnoremap <leader>f :<C-u>Unite -buffer-name=files   -start-insert file_rec<cr>
+nnoremap <leader>t :<C-u>UniteWithBufferDir -start-insert file<cr>
+nnoremap <leader>r :<C-u>Unite -buffer-name=mru     -start-insert file_mru<cr>
+nnoremap <leader>o :<C-u>Unite -buffer-name=outline -start-insert outline<cr>
+nnoremap <leader>y :<C-u>Unite -buffer-name=yank    history/yank<cr>
+nnoremap <leader>e :<C-u>Unite -buffer-name=buffer buffer<cr>
+nnoremap <space>/ :Unite grep:.<cr>
+" nnoremap <leader>b :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>
+" nnoremap <leader>f :<C-u>Unite -buffer-name=files   -start-insert file_rec/async:!<cr>
+
+" Use ag for search
+if executable('ag')
+  let g:unite_source_grep_command = 'ag'
+  let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
+  let g:unite_source_grep_recursive_opt = ''
+endif
+
+" Custom mappings for the unite buffer
+function! s:unite_settings()
+  " Play nice with supertab
+  let b:SuperTabDisabled=1
+  " Enable navigation with control-j and control-k in insert mode
+  imap <buffer> <C-j>   <Plug>(unite_select_next_line)
+  imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
+endfunction
+autocmd FileType unite call s:unite_settings()
+
+if (has('gui_running'))
+  set columns=95
+  set lines=60
+  set number
+  colorscheme macvim
+  set background=light
+  " set macmeta
+endif
+
+iabbrev rdebug require 'ruby-debug'; debugger
+
+" webby haml syntax
+autocmd BufNewFile,BufRead *.txt
+  \  if getline(1) =~ '^---$' | 
+  \    set ft=haml | 
+  \  endif
+ 
+autocmd FocusLost * silent! wall
+autocmd BufNewFile,BufRead *.ooc set filetype=ooc
+autocmd BufEnter,BufWinEnter,CursorHold filename :checktime
+
+autocmd User Rails Rnavcommand decorator app/decorators -suffix=_decorator.rb -default=model()
+autocmd User Rails Rnavcommand jtemplate   app/assets/javascripts/templates -suffix=.hbs.haml -default=model()
+autocmd User Rails Rnavcommand template   app/assets/javascripts/templates -suffix=.jst.eco.haml -default=model()
+autocmd User Rails Rnavcommand jmodel      app/assets/javascripts/models -suffix=.js.coffee -default=model()
+autocmd User Rails Rnavcommand jcollection app/assets/javascripts/collections -suffix=.js.coffee -default=model()
+autocmd User Rails Rnavcommand jview       app/assets/javascripts/views -suffix=.js.coffee -default=model()
+autocmd User Rails Rnavcommand fabricator spec/fabricators -suffix=_fabricator.rb -default=model()
+
+command! -bar -range=% Trim :<line1>,<line2>s/\s\+$//e
+command! -bar -range=% NotRocket :<line1>,<line2>s/:\(\w\+\)\s*=>/\1:/ge
