@@ -91,6 +91,8 @@ alias netstat_osx='sudo lsof -iTCP -sTCP:LISTEN -P'
 alias smooth_fonts="defaults -currentHost write -globalDomain AppleFontSmoothing -int 2"
 alias simpleserver="python -m SimpleHTTPServer"
 alias sourcechruby="source /usr/local/share/chruby/chruby.sh"
+
+# Git aliases
 alias gap='git add -p'
 alias gb='git branch'
 alias gc='git commit -v'
@@ -109,7 +111,6 @@ alias gr='git rebase'
 alias grc='git rebase --continue'
 alias gra='git rebase --abort'
 alias vi='vim'
-alias togtm='open "GoToMeeting://?Action=Join&MeetingID=979435821"'
 
 # Ruby
 alias cd_ruby_src="cd $GEM_HOME/../../../"
