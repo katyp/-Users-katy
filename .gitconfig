@@ -1,0 +1,40 @@
+[user]
+	name = Katy Pedelty
+	email = katy.ryan.pedelty@gmail.com
+[alias]
+	st = status
+  sq = rebase -i --autosquash
+	ci = commit
+	co = checkout
+	cp = cherry-pick
+	put = push origin HEAD
+	fixup = !sh -c 'git commit -m \"fixup! $(git log -1 --format='\\''%s'\\'' $@)\"' -
+	squash = !sh -c 'git commit -m \"squash! $(git log -1 --format='\\''%s'\\'' $@)\"' -
+	ri = rebase --interactive
+  log = log --decorate
+  lg = log --graph --pretty=format:'%C(yellow)%h%C(white) %s - %C(cyan)%an %C(white dim)%ar%C(red dim)%d'
+  todo = commit --allow-empty -m
+  stash = stash --keep-index
+[branch]
+  autosetuprebase = always
+[color]
+	branch = auto
+	diff = auto
+	interactive = auto
+	status = auto
+	ui = auto
+[core]
+	excludesfile = /Users/katy/.gitignore_global
+	editor = vim
+	whitespace = warn
+	trustctime = true
+[rerere]
+	enabled = false
+[push]
+  default=current
+[mergetool]
+	keepBackup = false
+[merge]
+	tool = vimdiff
+[rebase]
+	autosquash = true
