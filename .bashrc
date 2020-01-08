@@ -54,6 +54,8 @@ export LSCOLORS="gxfxcxdxbxegedabagacad"
 export LESS=FRX
 export GOPATH=~/src/go
 export GOPRIVATE="github.com/carezone"
+# Use proper postgres cluster. Else, migrations add SET LOCK_TIMEOUT = ...; w/e
+export PGCLUSTER=9.6/main
 
 # Aliases
 #NAVIGATION
