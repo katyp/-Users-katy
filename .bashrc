@@ -53,6 +53,7 @@ export HISTSIZE=50000
 export LSCOLORS="gxfxcxdxbxegedabagacad"
 export LESS=FRX
 export GOPATH=~/src/go
+export GOPRIVATE="github.com/carezone"
 
 # Aliases
 #NAVIGATION
@@ -129,6 +130,10 @@ source `brew --prefix`/etc/bash_completion.d/git-completion.bash
 ##
 # PATH settings
 ##
+
+# Add GOBIN to path
+GOBIN="$GOPATH/bin"
+PATH="$GOBIN:$PATH"
 
 # Python 2.7
 # The orginal version is saved in .bash_profile.pysave
