@@ -59,20 +59,14 @@ export PGCLUSTER=9.6/main
 
 # Aliases
 #NAVIGATION
-alias src='cd ~/src'
-alias cr='cd /Users/katy/src/crypto/set1'
-alias cv='cd /Users/katy/src/opencv-play'
-alias cvn='cd /Users/katy/src/opencv-play && ipython notebook'
-alias ex='cd ~/Documents/exercism/ruby/'
+alias agg='cd ~/src/go/chimera-aggregator'
+alias cm='cd ~/src/campaignmanagementui'
+alias go='cd ~/src/go'
 alias pa='cd ~/src/parliament'
 alias pu='cd ~/src/puppet'
 alias py='cd ~/src/python-play'
-alias ru='cd ~/src/ruthwedapp/'
-alias db='cd ~/src/databases/csep544-2017au-kpedelty'
-alias cm='cd ~/src/campaignmanagementui'
-alias amya='cd ~/src/amya-iiotweb-demo'
+alias src='cd ~/src'
 alias restartp='pg_ctl -D /usr/local/var/postgres start'
-alias ro='cd ~/src/interview-190412-kp/rover'
 
 #"SCRIPTS"
 alias fix_skype='rm /Users/katy/Library/Preferences/com.skype.skype.plist'
