@@ -61,7 +61,7 @@ export PGCLUSTER=9.6/main
 #NAVIGATION
 alias agg='cd ~/src/go/chimera-aggregator'
 alias cm='cd ~/src/campaignmanagementui'
-alias go='cd ~/src/go'
+alias gogo='cd ~/src/go'
 alias pa='cd ~/src/parliament'
 alias pu='cd ~/src/puppet'
 alias py='cd ~/src/python-play'
