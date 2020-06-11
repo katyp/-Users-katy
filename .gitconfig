@@ -24,7 +24,7 @@
 	status = auto
 	ui = auto
 [core]
-	excludesfile = /Users/katy/.gitignore_global
+	excludesfile = /Users/katy/.gitignore
 	editor = vim
 	whitespace = warn
 	trustctime = true
@@ -38,3 +38,5 @@
 	tool = vimdiff
 [rebase]
 	autosquash = true
+[url "ssh://git@github.com/"]
+	insteadOf = https://github.com/

@@ -56,11 +56,13 @@ export GOPATH=~/src/go
 export GOPRIVATE="github.com/carezone"
 # Use proper postgres cluster. Else, migrations add SET LOCK_TIMEOUT = ...; w/e
 export PGCLUSTER=9.6/main
+# Store stuff under Homebrew's prefix, rather than ~/.rbenv
+export RBENV_ROOT=/usr/local/var/rbenv
 
 # Aliases
 #NAVIGATION
 alias agg='cd ~/src/go/chimera-aggregator'
-alias cm='cd ~/src/campaignmanagementui'
+alias cf='cd ~/src/careful'
 alias gogo='cd ~/src/go'
 alias pa='cd ~/src/parliament'
 alias pu='cd ~/src/puppet'
@@ -73,6 +75,8 @@ alias fix_skype='rm /Users/katy/Library/Preferences/com.skype.skype.plist'
 alias re_db='bundle exec rake db:drop && bundle exec rake db:create && bundle exec rake db:structure:load && bundle exec rake db:migrate && rake db:populate && rake db:test:prepare && echo "Done!"'
 alias re_news='rake news:reset && rake news:sources[news_sources.yml,true] && rake news:load[news.csv] && rake news:bing'
 alias update_routes='rake routes > /Users/katy/Documents/routes.txt'
+# STUPID DEFAULTS
+alias ag='ag --hidden -f'
 #OTHER
 alias grep='grep --color=auto'
 alias gba='git branch -a'
@@ -127,6 +131,9 @@ source `brew --prefix`/etc/bash_completion.d/git-completion.bash
 # PATH settings
 ##
 
+# Add czctl
+PATH="$PATH:~/src/czctl"
+
 # Add GOBIN to path
 GOBIN="$GOPATH/bin"
 PATH="$GOBIN:$PATH"
@@ -151,6 +158,11 @@ export PATH="/Users/katy/.rvm/bin:$PATH"
 
 touch ~/.bashrc_private
 source ~/.bashrc_private
+
+# Node nvm stuff
+export NVM_DIR=~/.nvm
+source $(brew --prefix nvm)/nvm.sh
+nvm use node
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
